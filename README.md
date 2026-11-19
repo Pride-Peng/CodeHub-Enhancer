@@ -67,9 +67,12 @@ The interface is available in **Chinese and English**. By default it uses Chines
 > Screenshots and demo GIFs go here.
 
 **📷 Add image here:** 
+<img width="317" height="792" alt="image" src="https://github.com/user-attachments/assets/fbb7e55a-216b-47a5-ab01-15f342e63e26" />
 
 
 **📷 Add image here:** the popup settings panel
+<img width="380" height="502" alt="image" src="https://github.com/user-attachments/assets/ee2b6c43-d9cc-4ef6-ad50-d93591bb2bd4" />
+
 
 ## Installation (load unpacked)
 
