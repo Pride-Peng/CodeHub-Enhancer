@@ -1,0 +1,93 @@
+{
+  "manifest_version": 3,
+  "name": "CodeHub Enhancer",
+  "version": "0.1.0",
+  "description": "液态玻璃风格的 GitHub / Gitee / GitLab 代码浏览增强：侧边文件树、单文件下载、纯净复制、OI 竞赛工具箱。",
+  "author": "CodeHub Enhancer Contributors",
+  "homepage_url": "https://github.com/your-name/CodeHub-Enhancer",
+  "minimum_chrome_version": "102",
+  "icons": {
+    "16": "src/assets/icons/icon16.png",
+    "48": "src/assets/icons/icon48.png",
+    "128": "src/assets/icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://raw.githubusercontent.com/*",
+    "https://api.github.com/*",
+    "https://gitee.com/*",
+    "https://gitlab.com/*"
+  ],
+  "background": {
+    "service_worker": "src/service-worker/background.js"
+  },
+  "action": {
+    "default_title": "CodeHub Enhancer",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "src/assets/icons/icon16.png",
+      "48": "src/assets/icons/icon48.png",
+      "128": "src/assets/icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "css": [
+        "src/styles/liquid-glass.css",
+        "src/styles/sidebar.css",
+        "src/styles/code-enhance.css"
+      ],
+      "js": [
+        "src/i18n/messages.js",
+        "src/content/common-core.js",
+        "src/content/oi-tool.js",
+        "src/content/github.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gitee.com/*"],
+      "css": [
+        "src/styles/liquid-glass.css",
+        "src/styles/sidebar.css",
+        "src/styles/code-enhance.css"
+      ],
+      "js": [
+        "src/i18n/messages.js",
+        "src/content/common-core.js",
+        "src/content/oi-tool.js",
+        "src/content/gitee.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gitlab.com/*"],
+      "css": [
+        "src/styles/liquid-glass.css",
+        "src/styles/sidebar.css",
+        "src/styles/code-enhance.css"
+      ],
+      "js": [
+        "src/i18n/messages.js",
+        "src/content/common-core.js",
+        "src/content/oi-tool.js",
+        "src/content/gitlab.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-sidebar-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+P",
+        "mac": "Alt+Shift+P"
+      },
+      "description": "打开 / 收起侧边文件树面板"
+    }
+  }
+}

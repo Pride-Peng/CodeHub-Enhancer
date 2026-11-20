@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeHub Enhancer</title>
+  <link rel="stylesheet" href="../styles/liquid-glass.css" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body class="codehub-popup">
+  <div class="popup-wrap">
+    <header class="popup-header">
+      <div class="popup-logo">&lt;/&gt;</div>
+      <div>
+        <h1>CodeHub Enhancer</h1>
+        <p class="ch-muted">v0.1.0 · <span data-i18n="tagline">液态玻璃代码浏览增强</span></p>
+      </div>
+      <button id="lang-toggle" class="ch-btn ch-lang-toggle" type="button" title="Language / 语言" aria-pressed="false">中文</button>
+    </header>
+
+    <nav class="ch-tabs">
+      <button class="ch-tab active" data-tab="features" data-i18n="tab.features">功能开关</button>
+      <button class="ch-tab" data-tab="style" data-i18n="tab.style">样式设置</button>
+      <button class="ch-tab" data-tab="shortcut" data-i18n="tab.shortcut">快捷键</button>
+      <button class="ch-tab" data-tab="about" data-i18n="tab.about">关于</button>
+    </nav>
+
+    <main>
+      <!-- 功能开关 -->
+      <section id="tab-features" class="ch-panel ch-tab-pane active">
+        <div id="feature-list"></div>
+      </section>
+
+      <!-- 样式设置 -->
+      <section id="tab-style" class="ch-panel ch-tab-pane">
+        <div class="setting-row">
+          <div>
+            <div class="label" data-i18n="style.blur">玻璃模糊强度</div>
+            <div class="desc" data-i18n="style.blur.desc">数值越大，背景毛玻璃越模糊</div>
+          </div>
+          <input type="range" min="14" max="24" step="1" data-path="style.blur" />
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="label" data-i18n="style.followDarkMode">跟随深色模式</div>
+            <div class="desc" data-i18n="style.followDarkMode.desc">玻璃配色自动适配页面亮 / 暗主题</div>
+          </div>
+          <label class="ch-switch">
+            <input type="checkbox" data-path="style.followDarkMode" />
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="label" data-i18n="style.fontFamily">代码字体</div>
+            <div class="desc" data-i18n="style.fontFamily.desc">如 Consolas、JetBrains Mono，留空用默认</div>
+          </div>
+          <input class="ch-input" type="text" data-path="style.fontFamily" data-i18n-placeholder="style.fontFamily.ph" placeholder="字体名称" />
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="label" data-i18n="style.codeFontSize">代码字号</div>
+            <div class="desc" data-i18n="style.codeFontSize.desc">10 ~ 24 px</div>
+          </div>
+          <input type="range" min="10" max="24" step="1" data-path="style.codeFontSize" />
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="label" data-i18n="style.codeTheme">代码主题</div>
+            <div class="desc" data-i18n="style.codeTheme.desc">独立于平台 / 系统主题</div>
+          </div>
+          <select class="ch-input" data-path="style.codeTheme">
+            <option value="auto" data-i18n="style.codeTheme.auto">自动</option>
+            <option value="light" data-i18n="style.codeTheme.light">浅色</option>
+            <option value="dark" data-i18n="style.codeTheme.dark">深色</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="label" data-i18n="style.showWhitespace">空白字符可视化</div>
+            <div class="desc" data-i18n="style.showWhitespace.desc">空格显示 ·，Tab 显示 →，便于排查缩进</div>
+          </div>
+          <label class="ch-switch">
+            <input type="checkbox" data-path="style.showWhitespace" />
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- 快捷键说明 -->
+      <section id="tab-shortcut" class="ch-panel ch-tab-pane">
+        <div class="shortcut-row">
+          <span class="ch-muted" data-i18n="shortcut.toggle">切换侧边文件树面板</span>
+          <span class="kbd-group">
+            <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
+          </span>
+        </div>
+        <p class="ch-muted shortcut-note" data-i18n-html="shortcut.note">
+          快捷键在 GitHub / Gitee / GitLab 页面生效。若与其他扩展冲突，
+          可在浏览器地址栏打开 <span class="mono">chrome://extensions/shortcuts</span>
+          重新分配；关闭文件树模块后按快捷键会收到提示。
+        </p>
+      </section>
+
+      <!-- 关于 -->
+      <section id="tab-about" class="ch-panel ch-tab-pane">
+        <div class="about-block">
+          <h3 data-i18n="about.privacy">隐私说明</h3>
+          <p data-i18n-html="about.privacy.text">本扩展不收集任何账号信息、浏览历史或仓库内容；所有配置与临时数据仅保存在本机浏览器
+            <span class="mono">storage.local</span>，不连接自建服务器。权限仅限代码托管站点及其公开文件 / 接口地址，源码完全开源可审计。</p>
+
+          <h3 data-i18n="about.compare">竞品对比</h3>
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th data-i18n="cmp.project">项目</th>
+                <th data-i18n="cmp.platform">平台</th>
+                <th data-i18n="cmp.oi">OI 工具箱</th>
+                <th data-i18n="cmp.ui">UI</th>
+                <th data-i18n="cmp.opensource">开源</th>
+                <th data-i18n="cmp.paid">付费</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Octotree</td><td>GitHub</td><td>❌</td><td data-i18n="cmp.octotree.ui">传统</td><td data-i18n="cmp.octotree.opensource">闭源</td><td data-i18n="cmp.octotree.paid">高级功能付费</td></tr>
+              <tr><td>Refined GitHub</td><td>GitHub</td><td>❌</td><td data-i18n="cmp.refined.ui">简约朴素</td><td data-i18n="cmp.refined.opensource">开源</td><td data-i18n="cmp.refined.paid">免费</td></tr>
+              <tr><td>CodeHub Enhancer</td><td>GitHub+Gitee+GitLab</td><td>✅</td><td data-i18n="cmp.self.ui">iOS26 液态玻璃</td><td data-i18n="cmp.self.opensource">MIT</td><td data-i18n="cmp.self.paid">全部免费</td></tr>
+            </tbody>
+          </table>
+
+          <h3 data-i18n="about.changelog">更新日志</h3>
+          <p data-i18n-html="about.changelog.text"><span class="mono">v0.1.0</span>：核心 MVP —— 液态玻璃 UI、Alt+Shift+P 快捷键、侧边文件树、单文件下载、纯净复制、基础 OI 样例提取、设置面板。</p>
+        </div>
+        <button class="ch-btn reset-btn" id="reset-btn" data-i18n="about.reset">恢复默认设置</button>
+      </section>
+    </main>
+  </div>
+  <script src="../i18n/messages.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

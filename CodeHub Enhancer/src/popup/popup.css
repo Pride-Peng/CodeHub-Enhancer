@@ -1,0 +1,114 @@
+/* ============================================================
+ * CodeHub Enhancer — popup.css
+ * 弹出面板布局，颜色 / 圆角 / 动效复用 liquid-glass.css 变量。
+ * ============================================================ */
+
+html, body { margin: 0; padding: 0; }
+
+body.codehub-popup {
+  width: 380px;
+  font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(160deg, #eef2f8, #e2e8f2);
+}
+body.codehub-popup[data-codehub-theme="dark"] {
+  background: linear-gradient(160deg, #151a22, #1f2530);
+}
+
+.popup-wrap {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.popup-header { display: flex; gap: 10px; align-items: center; }
+.popup-logo {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--lg-accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--lg-accent);
+  flex: none;
+}
+.popup-header h1 { font-size: 15px; margin: 0; }
+.popup-header p { margin: 2px 0 0; font-size: 12px; }
+
+/* 语言切换按钮：默认（关闭）= 中文，单击（打开）变蓝 = 英文 */
+.ch-lang-toggle {
+  margin-left: auto;
+  flex: none;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+.ch-lang-toggle.is-on {
+  background: var(--lg-accent-soft);
+  border-color: var(--lg-accent-border);
+  color: var(--lg-accent);
+}
+
+/* 标签页 */
+.ch-tabs {
+  display: flex; gap: 6px; padding: 4px;
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-surface);
+  border: 1px solid var(--lg-stroke);
+}
+.ch-tab {
+  flex: 1; padding: 7px 4px; border: none; background: transparent;
+  color: var(--lg-text-muted); font-size: 12.5px; border-radius: 8px; cursor: pointer;
+  transition: background 0.16s var(--lg-ease), color 0.16s var(--lg-ease);
+}
+.ch-tab.active { background: var(--lg-surface-active); color: var(--lg-text); }
+
+.ch-tab-pane { display: none; padding: 12px; }
+.ch-tab-pane.active { display: block; animation: ch-fade-in 0.18s var(--lg-ease); }
+
+/* 设置行 */
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 9px 0;
+}
+.setting-row + .setting-row { border-top: 1px solid var(--lg-stroke); }
+.setting-row .label { font-size: 13px; }
+.setting-row .desc { font-size: 11.5px; color: var(--lg-text-muted); margin-top: 2px; }
+
+input[type="range"] { width: 140px; accent-color: var(--lg-accent); }
+select.ch-input { padding: 6px 10px; }
+
+/* 功能开关列表 */
+.feature-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 9px 0;
+}
+.feature-item + .feature-item { border-top: 1px solid var(--lg-stroke); }
+.feature-item .label { font-size: 13px; }
+.feature-item .desc { font-size: 11.5px; color: var(--lg-text-muted); margin-top: 2px; }
+
+/* 快捷键 */
+.shortcut-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-bottom: 10px;
+}
+.kbd-group { display: inline-flex; gap: 4px; }
+kbd {
+  padding: 4px 8px; border-radius: 6px;
+  border: 1px solid var(--lg-stroke);
+  background: var(--lg-surface-active);
+  font-family: inherit; font-size: 12px;
+}
+.shortcut-note { font-size: 12px; line-height: 1.7; }
+
+/* 关于页 */
+.about-block { font-size: 12.5px; line-height: 1.7; }
+.about-block h3 { font-size: 13px; margin: 10px 0 6px; }
+.mono { font-family: ui-monospace, Consolas, monospace; }
+
+.cmp-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+.cmp-table th, .cmp-table td {
+  padding: 6px 4px; border-bottom: 1px solid var(--lg-stroke); text-align: left;
+}
+.cmp-table th { color: var(--lg-text-muted); font-weight: 600; }
+
+.reset-btn { width: 100%; justify-content: center; margin-top: 12px; }

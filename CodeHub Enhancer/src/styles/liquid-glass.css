@@ -1,0 +1,219 @@
+/* ============================================================
+   CodeHub Enhancer — liquid-glass.css
+   全局液态玻璃（Liquid Glass / iOS 26-27）设计变量与组件。
+   所有面板、按钮、输入框、提示卡片统一复用本文件变量，禁止零散写样式。
+   ============================================================ */
+
+/* ---------- 1. 原始设计令牌 ---------- */
+:root {
+  /* 模糊强度（可被 popup 配置覆盖，通过 --lg-blur 在内联/组件上重写） */
+  --lg-blur: 20px;
+  --lg-saturation: 1.4;
+
+  /* 浅色玻璃（透明度 12% ~ 22%） */
+  --lg-surface-light: rgba(255, 255, 255, 0.16);
+  --lg-surface-light-hover: rgba(255, 255, 255, 0.24);
+  --lg-surface-light-active: rgba(255, 255, 255, 0.30);
+  --lg-stroke-light: rgba(255, 255, 255, 0.55);
+
+  /* 深色玻璃 */
+  --lg-surface-dark: rgba(22, 26, 34, 0.44);
+  --lg-surface-dark-hover: rgba(34, 40, 52, 0.52);
+  --lg-surface-dark-active: rgba(44, 52, 66, 0.60);
+  --lg-stroke-dark: rgba(255, 255, 255, 0.16);
+
+  /* 文字 */
+  --lg-text-light: rgba(24, 28, 36, 0.92);
+  --lg-text-muted-light: rgba(24, 28, 36, 0.56);
+  --lg-text-dark: rgba(245, 247, 250, 0.94);
+  --lg-text-muted-dark: rgba(245, 247, 250, 0.62);
+
+  /* 强调色 / 危险色 */
+  --lg-accent: #4f8cff;
+  --lg-accent-soft: rgba(79, 140, 255, 0.18);
+  --lg-accent-border: rgba(79, 140, 255, 0.40);
+  --lg-danger: #ff6b6b;
+  --lg-danger-border: rgba(255, 107, 107, 0.40);
+
+  /* 多层柔和弥散阴影（无生硬黑阴影） */
+  --lg-shadow-light:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 4px 14px rgba(15, 23, 42, 0.08),
+    0 12px 40px rgba(15, 23, 42, 0.10);
+  --lg-shadow-dark:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 4px 14px rgba(0, 0, 0, 0.28),
+    0 12px 40px rgba(0, 0, 0, 0.36);
+
+  /* 圆角 */
+  --lg-radius-sm: 10px;
+  --lg-radius: 16px;
+  --lg-radius-lg: 22px;
+
+  /* 动效缓动 */
+  --lg-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- 2. 主题解析（亮玻璃 / 暗玻璃两套配色） ---------- */
+.codehub-root,
+.codehub-popup {
+  --lg-surface: var(--lg-surface-light);
+  --lg-surface-hover: var(--lg-surface-light-hover);
+  --lg-surface-active: var(--lg-surface-light-active);
+  --lg-stroke: var(--lg-stroke-light);
+  --lg-text: var(--lg-text-light);
+  --lg-text-muted: var(--lg-text-muted-light);
+  --lg-shadow: var(--lg-shadow-light);
+  color-scheme: light;
+}
+
+.codehub-root[data-codehub-theme="dark"],
+.codehub-popup[data-codehub-theme="dark"] {
+  --lg-surface: var(--lg-surface-dark);
+  --lg-surface-hover: var(--lg-surface-dark-hover);
+  --lg-surface-active: var(--lg-surface-dark-active);
+  --lg-stroke: var(--lg-stroke-dark);
+  --lg-text: var(--lg-text-dark);
+  --lg-text-muted: var(--lg-text-muted-dark);
+  --lg-shadow: var(--lg-shadow-dark);
+  color-scheme: dark;
+}
+
+/* ---------- 3. 基础玻璃面板 ---------- */
+.ch-panel {
+  background:
+    radial-gradient(120% 120% at 0% 0%, var(--lg-surface-hover) 0%, transparent 55%),
+    var(--lg-surface);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturation));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturation));
+  border: 1px solid var(--lg-stroke);
+  border-radius: var(--lg-radius);
+  box-shadow: var(--lg-shadow);
+  color: var(--lg-text);
+}
+
+/* ---------- 4. 按钮 ---------- */
+.ch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--lg-stroke);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-surface);
+  -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.8)) saturate(var(--lg-saturation));
+  backdrop-filter: blur(calc(var(--lg-blur) * 0.8)) saturate(var(--lg-saturation));
+  color: var(--lg-text);
+  font-size: 13px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 0.16s var(--lg-ease), background 0.16s var(--lg-ease),
+    border-color 0.16s var(--lg-ease), opacity 0.16s var(--lg-ease);
+  user-select: none;
+}
+.ch-btn:hover { background: var(--lg-surface-hover); }
+.ch-btn:active { transform: scale(0.96); background: var(--lg-surface-active); }
+.ch-btn--primary {
+  background: var(--lg-accent-soft);
+  border-color: var(--lg-accent-border);
+  color: var(--lg-accent);
+}
+.ch-btn--primary:hover { background: var(--lg-accent-soft); }
+.ch-btn--icon { padding: 5px 7px; border-radius: 8px; }
+.ch-btn--icon svg { width: 15px; height: 15px; }
+.ch-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ---------- 5. 输入框 ---------- */
+.ch-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--lg-stroke);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-surface);
+  -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.8));
+  backdrop-filter: blur(calc(var(--lg-blur) * 0.8));
+  color: var(--lg-text);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.16s var(--lg-ease), background 0.16s var(--lg-ease);
+  box-sizing: border-box;
+}
+.ch-input::placeholder { color: var(--lg-text-muted); }
+.ch-input:focus { border-color: var(--lg-accent); background: var(--lg-surface-hover); }
+
+/* ---------- 6. 开关 ---------- */
+.ch-switch { position: relative; display: inline-flex; width: 38px; height: 22px; flex: none; }
+.ch-switch input { opacity: 0; width: 0; height: 0; }
+.ch-switch .track {
+  position: absolute; inset: 0; border-radius: 999px;
+  background: var(--lg-surface-active);
+  border: 1px solid var(--lg-stroke);
+  transition: background 0.18s var(--lg-ease);
+}
+.ch-switch .thumb {
+  position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--lg-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.18s var(--lg-ease);
+}
+.ch-switch input:checked + .track { background: var(--lg-accent); }
+.ch-switch input:checked + .track .thumb { transform: translateX(16px); background: #fff; }
+
+/* ---------- 7. 提示 / 悬浮卡片 ---------- */
+.ch-toast-host {
+  position: fixed; right: 16px; bottom: 16px; z-index: 2147483000;
+  display: flex; flex-direction: column; gap: 10px; max-width: 320px;
+}
+.ch-toast {
+  padding: 10px 14px; border-radius: var(--lg-radius-sm);
+  background: var(--lg-surface);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturation));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturation));
+  border: 1px solid var(--lg-stroke);
+  box-shadow: var(--lg-shadow);
+  color: var(--lg-text); font-size: 13px;
+  opacity: 0; transform: translateY(8px) scale(0.98);
+  transition: opacity 0.22s var(--lg-ease), transform 0.22s var(--lg-ease);
+}
+.ch-toast--show { opacity: 1; transform: translateY(0) scale(1); }
+.ch-toast--error { border-color: var(--lg-danger-border); }
+
+.ch-popover {
+  position: fixed; z-index: 2147483001; max-width: 300px;
+  padding: 12px 14px; border-radius: var(--lg-radius);
+  background: var(--lg-surface);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturation));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturation));
+  border: 1px solid var(--lg-stroke);
+  box-shadow: var(--lg-shadow);
+  color: var(--lg-text); font-size: 13px;
+}
+.ch-popover .ch-popover-title { font-weight: 600; margin-bottom: 4px; }
+.ch-popover .ch-popover-desc { color: var(--lg-text-muted); font-size: 12px; line-height: 1.5; }
+.ch-popover .ch-popover-meta { margin-top: 6px; color: var(--lg-text-muted); font-size: 12px; }
+
+/* ---------- 8. 通用工具类 ---------- */
+.ch-muted { color: var(--lg-text-muted); }
+.ch-row { display: flex; align-items: center; gap: 10px; }
+.ch-row--between { justify-content: space-between; }
+.ch-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.ch-scroll::-webkit-scrollbar-thumb { background: var(--lg-surface-active); border-radius: 999px; }
+.ch-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- 9. 动画 ---------- */
+@keyframes ch-pop-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes ch-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ch-spin { to { transform: rotate(360deg); } }
+
+.ch-pop-in { animation: ch-pop-in 0.24s var(--lg-ease) both; }
+
+/* 加载动画 */
+.ch-spinner {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--lg-surface-active);
+  border-top-color: var(--lg-accent);
+  animation: ch-spin 0.9s linear infinite;
+}
