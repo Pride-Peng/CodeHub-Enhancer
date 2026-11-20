@@ -170,4 +170,4 @@ This extension does not and will not implement anything that bypasses platform p
 
 ## License
 
-[MIT License](LICENSE) © 2026 CodeHub Enhancer Contributors
+[MIT License](LICENSE) © 2026 CodeHub Enhancer Contributors:Pride-Peng
